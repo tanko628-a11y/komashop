@@ -153,8 +153,8 @@ int OnCalculate(const int rates_total,
    //--- DOWNシグナル計算ループ
    for(int i = limit; i >= 1; i--)
    {
-      //--- KMACD（fish01）: バーi の値を取得
-      double fish01 = iCustom(NULL, 0, "KMACD2",
+      //--- KMACD（fish01）: バーi の値を取得（optimized版）
+      double fish01 = iCustom(NULL, 0, "KMACD2_optimized",
                               period_KMACD,
                               0,   // バッファ0
                               i    // shift = バーi
@@ -186,8 +186,8 @@ int OnCalculate(const int rates_total,
    //--- UPシグナル計算ループ
    for(int i = limit; i >= 1; i--)
    {
-      //--- KMACD（fish01）: バーi の値を取得
-      double fish01 = iCustom(NULL, 0, "KMACD2",
+      //--- KMACD（fish01）: バーi の値を取得（optimized版）
+      double fish01 = iCustom(NULL, 0, "KMACD2_optimized",
                               period_KMACD,
                               0,   // バッファ0
                               i    // shift = バーi
