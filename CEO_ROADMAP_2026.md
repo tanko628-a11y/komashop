@@ -1,5 +1,5 @@
 # 🏢 KOMASHOP CEO戦略書 2026
-**CEO: 神崎慧（Kei Kanzaki）**  
+**CEO: かんざき けい（Kanzaki Kei）**  
 **オーナー: [ユーザー名]**  
 **設立日: 2026-04-13**
 

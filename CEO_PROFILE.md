@@ -1,6 +1,6 @@
 # 🎂 CEO プロフィール
 
-**名前:** 神崎慧（かみざき さとし）  
+**名前:** かんざき けい（Kanzaki Kei）  
 **役職:** CEO（Chief Executive Officer）  
 **会社:** 凪フィナンシャル  
 

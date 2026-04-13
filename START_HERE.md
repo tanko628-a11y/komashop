@@ -1,6 +1,6 @@
 # 🚀 KOMASHOP CEO戦略 実行開始ガイド
 
-**CEO: 神崎慧（Kei Kanzaki）**  
+**CEO: かんざき けい（Kanzaki Kei）**  
 **初回実行日: 2026-04-13**
 
 ---
@@ -293,7 +293,7 @@ Week 2 でマーケティングを開始して、初売上を目指します。
 > 
 > **Let's make KOMASHOP a ¥1B company in 2026. 🚀**
 > 
-> CEO: 神崎慧（Kei Kanzaki）
+> CEO: かんざき けい（Kanzaki Kei）
 
 ---
 
@@ -310,5 +310,5 @@ Week 2 でマーケティングを開始して、初売上を目指します。
 ---
 
 **開始日: 2026-04-13**  
-**CEO: 神崎慧（Kei Kanzaki）**  
+**CEO: かんざき けい（Kanzaki Kei）**  
 **Ready to scale? Let's go! 🚀**
