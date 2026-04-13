@@ -147,7 +147,7 @@ Body:
 [your-message]
 
 【対応予定】
-CEO 神崎慧が 24時間以内に
+担当者が 24時間以内に
 ご返信させていただきます。
 
 【その他】
@@ -155,13 +155,13 @@ CEO 神崎慧が 24時間以内に
 いつでもお気軽にお問い合わせください。
 
 凪フィナンシャル
-CEO: 神崎慧
+神崎慧
 https://www.komashikifx.site/
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 【重要】
 □ To: [your-email]（顧客のメールアドレス）
-□ From: kei@komasanshop.com （CEO のメール）
+□ From: kei@komasanshop.com （凪フィナンシャルのメール）
 □ 有効化: チェック ✓
 ```
 

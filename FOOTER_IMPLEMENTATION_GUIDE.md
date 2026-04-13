@@ -47,7 +47,7 @@
     
     <!-- Company Info Section -->
     <div class="footer-section footer-info">
-      <h3 class="footer-brand">凪フィナンシャル SHOP</h3>
+      <h3 class="footer-brand">凪フィナンシャル</h3>
       <p class="footer-tagline">
         MT4対応トレーディングツール<br>& データ分析サービス
       </p>
