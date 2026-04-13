@@ -22,7 +22,7 @@
 │  ・About        ・プライバシー  ・Facebook     │
 │  ・メンバー     ・プライバシー  ・Instagram    │
 │  ・沿革         ・利用規約      ・Twitter/X    │
-│  ・採用情報     ・お問い合わせ                │
+│                ・お問い合わせ                │
 │                                                 │
 ├─────────────────────────────────────────────────┤
 │ Designed with WordPress                        │
@@ -60,7 +60,6 @@
         <li><a href="/about/">About</a></li>
         <li><a href="/members/">メンバー</a></li>
         <li><a href="/history/">沿革</a></li>
-        <li><a href="/careers/">採用情報</a></li>
       </ul>
     </div>
 
