@@ -76,6 +76,9 @@ double arrEntDown[];  // DOWNシグナル（赤矢印）
 int    maxlimit      = 1500; // 計算する最大バー数
 string indicator_name = "karrows7_fixed";
 
+//--- 状態遷移フィルター用グローバル変数
+int last_signal = 0;  // 0=ニュートラル, 1=UP, -1=DOWN
+
 //+------------------------------------------------------------------+
 //| 初期化                                                           |
 //+------------------------------------------------------------------+
@@ -137,11 +140,15 @@ int OnCalculate(const int rates_total,
       limit = rates_total - prev_calculated + 1;
 
    //================================================================
-   // 【シグナル判定ロジック】
+   // 【シグナル判定ロジック（修正版：状態遷移フィルター搭載）】
    // 修正案C: シンプル・実用的・バランス型
    //
    // UP信号:   fish01 > fish_threshold_up   && rsi_cur > rsi_threshold_up
    // DOWN信号: fish01 < fish_threshold_down && rsi_cur < rsi_threshold_down
+   //
+   // ★新機能: 状態遷移フィルター
+   //   - 同じ方向（UP/DOWN）が連続する場合は矢印を表示しない
+   //   - 方向が変わった時だけ矢印を1本表示
    //
    // デフォルト値:
    //   fish_threshold_up    = 0.1   (fish値が明確に正）
@@ -150,18 +157,18 @@ int OnCalculate(const int rates_total,
    //   rsi_threshold_down   = 0.5   (RSI < 0.5 = 売られすぎ寄り）
    //================================================================
 
-   //--- DOWNシグナル計算ループ
+   //--- シグナル判定と状態遷移処理
    for(int i = limit; i >= 1; i--)
    {
-      //--- KMACD（fish01）: バーi の値を取得（optimized版）
+      //--- KMACD（fish01）: バーi の値を取得
       double fish01 = iCustom(NULL, 0, "KMACD2_optimized",
                               period_KMACD,
                               0,   // バッファ0
                               i    // shift = バーi
                              );
 
-      //--- LaguerreRSI: バーi の値（現在）
-      double rsi_cur = iCustom(NULL, 0, "LaguerreRSI",
+      //--- LaguerreRSI: バーi の値
+      double rsi_cur = iCustom(NULL, 0, "LaguerreRSI_fixed",
                                AAA, BBB, CCC,
                                DDD, EEE,
                                alertsOn, alertsOnCurrent, alertsMessage,
@@ -170,49 +177,36 @@ int OnCalculate(const int rates_total,
                                i     // shift = バーi
                               );
 
-      //--- DOWNシグナル条件（修正案C）
-      if(fish01 < fish_threshold_down
-         && rsi_cur < rsi_threshold_down
-        )
+      //--- 現在のシグナル条件を判定
+      bool is_down_signal = (fish01 < fish_threshold_down && rsi_cur < rsi_threshold_down);
+      bool is_up_signal = (fish01 > fish_threshold_up && rsi_cur > rsi_threshold_up);
+
+      //--- DOWN信号：前回がDOWN以外の場合のみ矢印を表示
+      if(is_down_signal && last_signal != -1)
       {
          arrEntDown[i] = High[i]; // 矢印をバーiのHighに描画
+         last_signal = -1;         // 状態を DOWN に更新
       }
       else
       {
-         arrEntDown[i] = 0.0; // シグナルなし
+         arrEntDown[i] = 0.0; // 矢印なし
       }
-   }
 
-   //--- UPシグナル計算ループ
-   for(int i = limit; i >= 1; i--)
-   {
-      //--- KMACD（fish01）: バーi の値を取得（optimized版）
-      double fish01 = iCustom(NULL, 0, "KMACD2_optimized",
-                              period_KMACD,
-                              0,   // バッファ0
-                              i    // shift = バーi
-                             );
-
-      //--- LaguerreRSI: バーi の値（現在）
-      double rsi_cur = iCustom(NULL, 0, "LaguerreRSI",
-                               AAA, BBB, CCC,
-                               DDD, EEE,
-                               alertsOn, alertsOnCurrent, alertsMessage,
-                               alertsSound, alertsNotify, alertsEmail, soundFile,
-                               1,    // バッファ1
-                               i     // shift = バーi
-                              );
-
-      //--- UPシグナル条件（修正案C）
-      if(fish01 > fish_threshold_up
-         && rsi_cur > rsi_threshold_up
-        )
+      //--- UP信号：前回がUP以外の場合のみ矢印を表示
+      if(is_up_signal && last_signal != 1)
       {
          arrEntUp[i] = Low[i]; // 矢印をバーiのLowに描画
+         last_signal = 1;      // 状態を UP に更新
       }
       else
       {
-         arrEntUp[i] = 0.0; // シグナルなし
+         arrEntUp[i] = 0.0; // 矢印なし
+      }
+
+      //--- どちらのシグナルも出ない場合は状態をリセット
+      if(!is_down_signal && !is_up_signal)
+      {
+         last_signal = 0; // ニュートラル状態に
       }
    }
 
