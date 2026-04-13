@@ -1,0 +1,77 @@
+/* Contact Form 7 カスタムスタイル */
+
+.wpcf7-form {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 40px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #f9fbfd 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 51, 102, 0.1);
+  font-family: 'Arial', 'Segoe UI', sans-serif;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.wpcf7-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #003366;
+  font-size: 15px;
+}
+
+.required {
+  color: #dc3545;
+  margin-left: 4px;
+}
+
+.wpcf7-form-control input[type="text"],
+.wpcf7-form-control input[type="email"],
+.wpcf7-form-control textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e0e6ed;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: inherit;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.wpcf7-form-control input[type="text"]:focus,
+.wpcf7-form-control input[type="email"]:focus,
+.wpcf7-form-control textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.wpcf7-form .wpcf7-submit {
+  background: linear-gradient(135deg, #003366 0%, #001f3f 100%);
+  color: #ffffff;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 51, 102, 0.2);
+}
+
+.wpcf7-form .wpcf7-submit:hover {
+  background: linear-gradient(135deg, #001f3f 0%, #000a1a 100%);
+  box-shadow: 0 6px 16px rgba(0, 51, 102, 0.3);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .wpcf7-form {
+    padding: 30px 20px;
+    margin: 30px 15px;
+  }
+}

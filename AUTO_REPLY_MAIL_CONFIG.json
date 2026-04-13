@@ -1,0 +1,6 @@
+{
+  "subject": "お問い合わせをお受けしました",
+  "body": "[your-name] 様\n\nいつも凪フィナンシャルをご利用いただき、\nありがとうございます。\n\nお送りいただいたお問い合わせを確認いたしました。\n\n【ご入力いただいた内容】\n件名: [your-subject]\n内容:\n[your-message]\n\n【対応予定】\nCEO 神崎慧が 24時間以内に\nご返信させていただきます。\n\n【その他】\nご質問やご不明な点がございましたら、\nいつでもお気軽にお問い合わせください。\n\n凪フィナンシャル\nCEO: 神崎慧\nhttps://www.komashikifx.site/",
+  "to": "[your-email]",
+  "from": "kei@komasanshop.com"
+}
