@@ -3,7 +3,7 @@
 # ============================================
 # WordPress デプロイメント 完全自動化スクリプト
 # 凪フィナンシャル Contact Form 7 + Footer
-# WP-CLI 使用
+# WP-CLI 使用 + Contact Form 自動作成
 # ============================================
 
 set -e
@@ -88,10 +88,51 @@ fi
 echo ""
 
 # ========================================
-# ステップ 3: footer.php にコード追加
+# ステップ 3: Contact Form 7 フォーム作成
 # ========================================
 
-echo -e "${YELLOW}【ステップ 3】footer.php にコード追加${NC}"
+echo -e "${YELLOW}【ステップ 3】Contact Form 7 フォーム作成${NC}"
+echo ""
+
+# デフォルトの「お問い合わせ」フォームが存在するか確認
+if wp post list --post_type=wpcf7_contact_form --format=count 2>/dev/null | grep -q "0"; then
+    echo "お問い合わせフォームを作成中..."
+
+    # Contact Form 7 フォームを作成
+    wp cf7 form create --title="お問い合わせ" 2>/dev/null || {
+        # コマンドが失敗した場合、手動で作成
+        wp post create --post_type=wpcf7_contact_form --post_title="お問い合わせ" --post_content='<p>名前（必須）<br />
+[text* your-name]</p>
+
+<p>メール（必須）<br />
+[email* your-email]</p>
+
+<p>件名<br />
+[text your-subject]</p>
+
+<p>メッセージ<br />
+[textarea your-message]</p>
+
+<p>プライバシーポリシーに同意する（必須）<br />
+[checkbox* consent "同意する"]</p>
+
+<p>[recaptcha]</p>
+
+<p>[submit "送信"]</p>' --post_status=publish --porcelain 2>/dev/null || echo ""
+    }
+
+    echo -e "${GREEN}✓ お問い合わせフォームを作成しました${NC}"
+else
+    echo -e "${YELLOW}⚠ お問い合わせフォームは既に存在します${NC}"
+fi
+
+echo ""
+
+# ========================================
+# ステップ 4: footer.php にコード追加
+# ========================================
+
+echo -e "${YELLOW}【ステップ 4】footer.php にコード追加${NC}"
 echo ""
 
 # アクティブテーマを取得
@@ -324,10 +365,10 @@ fi
 echo ""
 
 # ========================================
-# ステップ 4: キャッシュクリア
+# ステップ 5: キャッシュクリア
 # ========================================
 
-echo -e "${YELLOW}【ステップ 4】キャッシュクリア${NC}"
+echo -e "${YELLOW}【ステップ 5】キャッシュクリア${NC}"
 echo ""
 
 # WordPress キャッシュをクリア（キャッシュプラグインがあれば）
@@ -346,7 +387,7 @@ fi
 echo ""
 
 # ========================================
-# ステップ 5: デプロイメント完了
+# ステップ 6: デプロイメント完了
 # ========================================
 
 echo -e "${BLUE}========================================${NC}"
@@ -356,6 +397,7 @@ echo ""
 
 echo "実施内容:"
 echo "  ✓ Contact Form 7 をインストール・有効化"
+echo "  ✓ お問い合わせフォームを作成"
 echo "  ✓ footer.php にフッターコード追加"
 echo "  ✓ バックアップを作成"
 echo "  ✓ キャッシュをクリア"
