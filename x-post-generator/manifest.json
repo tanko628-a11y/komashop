@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "X Post Generator",
+  "version": "1.0",
+  "description": "FX トレード実績の X 投稿を自動生成（複数 PC 自動同期）",
+  "permissions": ["storage", "clipboardWrite"],
+  "host_permissions": [],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "X Post Generator",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
