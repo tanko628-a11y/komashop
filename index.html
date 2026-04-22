@@ -8,7 +8,33 @@
 </head>
 <body>
   <div class="container">
-    <div id="authSection" class="auth-section">
+    <div id="setupSection" class="setup-section">
+      <h2>セットアップウィザード</h2>
+      <p class="subtitle">Google Drive API を設定</p>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <h3>1. Google Cloud Console で認証情報を取得</h3>
+          <p>以下のリンクをクリックして Google Cloud Console を開き、OAuth クライアント ID とAPI キーを作成してください。</p>
+          <a href="https://console.cloud.google.com/apis/credentials" target="_blank" class="btn-secondary">Google Cloud Console を開く</a>
+        </div>
+        <div class="setup-step">
+          <h3>2. 認証情報を入力</h3>
+          <form id="setupForm">
+            <div class="form-group">
+              <label>クライアント ID</label>
+              <input type="text" id="clientId" placeholder="xxx.apps.googleusercontent.com" required>
+            </div>
+            <div class="form-group">
+              <label>API キー</label>
+              <input type="text" id="apiKey" placeholder="AIzaSy..." required>
+            </div>
+            <button type="submit" class="btn-primary">設定完了</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="authSection" class="auth-section" style="display:none;">
       <h2>X Post Generator</h2>
       <p class="subtitle">Google Drive に自動保存</p>
       <button id="loginBtn" class="btn-primary">Google でログイン</button>

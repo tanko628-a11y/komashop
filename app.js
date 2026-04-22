@@ -1,3 +1,6 @@
+let GDRIVE_API_KEY = localStorage.getItem('GDRIVE_API_KEY') || '';
+let GDRIVE_CLIENT_ID = localStorage.getItem('GDRIVE_CLIENT_ID') || '';
+
 const patterns = {
   1: (instrument, entry, exit, pips, hashtags) =>
     `${instrument} M5 LONG ${entry}→${exit} +${pips}pips確保。黄色矢印で方向感確認、VWAP付近でシグナル待機、Laguerre RSIでタイミング最適化。順張りの基本を貫いた結果。#MT4 #FX ${hashtags}`,
@@ -23,7 +26,7 @@ let gapiInited = false;
 let currentUser = null;
 
 function initGAPI() {
-  if (gapiInited) return;
+  if (gapiInited || !GDRIVE_API_KEY || !GDRIVE_CLIENT_ID) return;
 
   gapi.load('client', async () => {
     try {
@@ -36,6 +39,7 @@ function initGAPI() {
       setupAuthUI();
     } catch (error) {
       console.error('GAPI init failed:', error);
+      alert('Google Drive API 初期化に失敗しました。認証情報を確認してください。');
     }
   });
 }
@@ -238,7 +242,40 @@ function logout() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof gapi !== 'undefined') {
-    initGAPI();
+  // セットアップ完了判定
+  if (!GDRIVE_API_KEY || !GDRIVE_CLIENT_ID) {
+    setupWizard();
+  } else {
+    document.getElementById('setupSection').style.display = 'none';
+    document.getElementById('authSection').style.display = 'block';
+    if (typeof gapi !== 'undefined') {
+      initGAPI();
+    }
   }
 });
+
+function setupWizard() {
+  document.getElementById('setupForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const clientId = document.getElementById('clientId').value.trim();
+    const apiKey = document.getElementById('apiKey').value.trim();
+
+    if (!clientId || !apiKey) {
+      alert('クライアント ID と API キーを入力してください');
+      return;
+    }
+
+    localStorage.setItem('GDRIVE_CLIENT_ID', clientId);
+    localStorage.setItem('GDRIVE_API_KEY', apiKey);
+
+    GDRIVE_CLIENT_ID = clientId;
+    GDRIVE_API_KEY = apiKey;
+
+    document.getElementById('setupSection').style.display = 'none';
+    document.getElementById('authSection').style.display = 'block';
+
+    if (typeof gapi !== 'undefined') {
+      initGAPI();
+    }
+  });
+}
