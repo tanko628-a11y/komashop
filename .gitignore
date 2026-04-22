@@ -1,3 +1,6 @@
+# Google Drive API config (contains sensitive keys)
+gdrive-config.js
+
 # Release files (binary distribution)
 /release/
 
