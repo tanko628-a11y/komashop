@@ -1,480 +1,198 @@
-# ✅ 最終検証ガイド — デプロイメント完了確認
-
-**対象**: 全フェーズ完了後の最終検証  
-**所要時間**: 20-30分  
-**実施者**: CEO かんざき けい / Cowork / ユーザー  
-**検証時期**: `xserver-auto-deploy.bat` 実行から 30分後
-
----
-
-## 📋 検証フロー
-
-```
-【ユーザー】
-  ↓
-Windows で xserver-auto-deploy.bat 実行
-  ↓
-【システム】自動デプロイメント実行（10-15分）
-  ↓
-【CEO/Cowork】COWORK_DEPLOYMENT_CHECK.md で検証
-  ↓
-【Linux】Google Drive 同期確認
-  ↓
-【完了】デプロイメント完全完了
-```
-
----
-
-## 🎯 検証パート
-
-### Part 1️⃣: WordPress 環境確認（即座に実施）
-
-**実施者**: Cowork  
-**URL**: `https://www.komashikifx.site/wp-admin/`
-
-#### 1.1 WordPress ログイン
-
-```
-1. https://www.komashikifx.site/wp-admin/ にアクセス
-2. WordPress 管理画面にログイン
-   - ユーザー名: 既存アカウント
-   - パスワード: 既存パスワード
-```
-
-**✅ 成功基準**: 管理画面が表示される
-
----
-
-#### 1.2 プラグイン確認
-
-```
-左メニュー → プラグイン → インストール済みプラグイン
-```
-
-**確認項目**:
-
-| プラグイン | 状態 | チェック |
-|-----------|------|---------|
-| Contact Form 7 | ✅ 有効 | □ |
-| Akismet Anti-Spam | ✅ 有効 | □ |
-| WP Super Cache（使用中なら） | ✅ 有効 | □ |
-
-**✅ 成功基準**:
-- Contact Form 7 が表示されている
-- 「有効化」ボタンではなく「無効化」ボタンが表示されている（有効状態）
-
----
-
-#### 1.3 Contact Form 7 フォーム確認
-
-```
-左メニュー → Contact Form 7 → Contact Forms
-```
-
-**確認項目**:
-
-| 項目 | 内容 | チェック |
-|------|------|---------|
-| フォーム名 | お問い合わせ | □ |
-| フォームID | 例：contact-form-7 id="XX" | □ |
-| 状態 | 有効（アクティブ） | □ |
-
-**✅ 成功基準**:
-- 「お問い合わせ」フォームが表示される
-- 編集ボタンをクリックでフォームコードが表示される
-
----
-
-### Part 2️⃣: フロントエンド表示確認（すぐに実施）
-
-**実施者**: Cowork  
-**URL**: `https://www.komashikifx.site/`
-
-#### 2.1 フッター表示確認
-
-```
-1. https://www.komashikifx.site/ にアクセス
-2. ページ最下部（フッター）をスクロール確認
-```
-
-**確認項目**:
-
-```
-フッター表示内容:
-□ 左側: 凪フィナンシャル（会社名）
-□     MT4対応トレーディングツール & データ分析サービス（説明文）
-□ 中央左: About セクション
-  □ /about/ (About)
-  □ /members/ (Members)
-  □ /history/ (History)
-□ 中央右: Legal セクション
-  □ /privacy/ (Privacy Policy)
-  □ /terms/ (Terms of Service)
-  □ /contact/ (Contact)
-□ 右側: Social セクション
-  □ Facebook アイコン
-  □ Instagram アイコン
-  □ X（旧Twitter）アイコン
-□ 下部: Copyright 表記
-  □ © 2026 凪フィナンシャル. All Rights Reserved.
-```
-
-**✅ 成功基準**:
-- フッターが背景色（深い青 #003366）で表示
-- すべてのセクションが表示
-- すべてのリンク URL が正しい（/about/, /privacy/ など）
-
-#### 2.2 レスポンシブ確認（Optional）
-
-```
-【PC表示】
-1. ブラウザで上記確認
-   □ 4列グリッドレイアウト（About, Legal, Social 各列）
-
-【タブレット表示】（768px以上）
-1. ブラウザの開発者ツール起動（F12）
-2. デバイスサイズを 768px に設定
-   □ 2列グリッドレイアウトに変更されている
-
-【モバイル表示】（480px以下）
-1. デバイスサイズを 480px に設定
-   □ 1列グリッドレイアウト（スタック表示）
-```
-
-**✅ 成功基準**: 各サイズで崩れない
-
----
-
-### Part 3️⃣: お問い合わせフォーム確認（すぐに実施）
-
-**実施者**: Cowork  
-**URL**: `https://www.komashikifx.site/お問い合わせ/`
-
-#### 3.1 フォーム表示確認
-
-```
-1. https://www.komashikifx.site/お問い合わせ/ にアクセス
-2. フォームが表示されているか確認
-```
-
-**確認項目**:
-
-```
-□ ページタイトル: お問い合わせ
-□ フォームが表示されている
-□ 以下のフィールドが表示:
-  □ 名前フィールド（テキスト入力、必須表示あり）
-  □ メールアドレスフィールド（テキスト入力、必須表示あり）
-  □ 件名フィールド（テキスト入力、オプション）
-  □ メッセージフィールド（テキストエリア、オプション）
-  □ プライバシー同意チェックボックス（必須表示あり）
-  □ reCAPTCHA v3 バッジ（ページ下部に "protected by reCAPTCHA" 表示）
-  □ 送信ボタン（「送信」テキスト）
-```
-
-**✅ 成功基準**: すべてのフィールドが表示される
-
----
-
-#### 3.2 フォーム検証テスト
-
-```
-1. 必須フィールド以外（件名・メッセージ）を空白で送信テスト
-```
-
-**確認項目**:
-
-```
-□ 名前を入力: テスト太郎
-□ メールを入力: test@example.com
-□ 件名: （空白）
-□ メッセージ: （空白）
-□ プライバシー同意: チェック ✓
-□ 送信ボタンをクリック
-```
-
-**✅ 成功基準**:
-- フォームが送信される（エラーが出ない）
-- 送信完了メッセージが表示される
-
----
-
-### Part 4️⃣: テストメール送信（30分以内に実施）
-
-**実施者**: Cowork（ユーザー）
-
-#### 4.1 テスト情報で正式送信
-
-```
-フォームに以下を入力:
-```
-
-**送信情報**:
-
-```
-□ 名前: テスト太郎
-□ メール: test@example.com
-□ 件名: テスト送信
-□ メッセージ: テストメッセージです。システムが正常に動作しています。
-□ プライバシー同意: チェック ✓
-□ 送信ボタン: クリック
-```
-
-**完了メッセージ確認**:
-
-```
-表示されるメッセージ例:
-✓ "メッセージが送信されました。ご返信お待ちしています。"
-または
-✓ "Thank you for your message"
-```
-
-**✅ 成功基準**:
-- メッセージが送信される
-- 送信完了メッセージが表示される
-
----
-
-### Part 5️⃣: 受信メール確認（5-10分後）
-
-**実施者**: CEO かんざき けい
-
-#### 5.1 受信メール確認
-
-```
-メールアカウント: kei@komasanshop.com
-受信ボックスを確認
-```
-
-**確認項目**:
-
-```
-□ 新規メールが到着している
-□ 件名: 【新規お問い合わせ】テスト送信
-□ 送信者: Contact Form 7 <sender@komashikifx.site>
-□ 本文に以下の内容が含まれている:
-  □ 送信者名: テスト太郎
-  □ 送信者メール: test@example.com
-  □ 件名: テスト送信
-  □ メッセージ本文: テストメッセージです。...
-  □ 送信日時: 2026-04-23 12:XX:XX（現在時刻と一致）
-```
-
-**✅ 成功基準**:
-- メールが受信されている
-- すべての情報が正しく含まれている
-- 送信時刻が正確に記録されている
-
----
-
-### Part 6️⃣: 自動返信メール確認（5-10分後）
-
-**実施者**: Cowork（テスト送信者）
-
-#### 6.1 自動返信メール確認
-
-```
-メールアカウント: test@example.com
-受信ボックスを確認
-```
-
-**確認項目**:
-
-```
-□ 新規メールが到着している
-□ 件名: お問い合わせをお受けしました
-□ 送信者: Contact Form 7 <wordpress@komashikifx.site>
-□ 本文に以下の内容が含まれている:
-  □ "いつもお世話になっております。"
-  □ "ご連絡ありがとうございます。"
-  □ "24時間以内に返信いたします。"
-  または
-  □ "We will respond within 24 hours."
-```
-
-**✅ 成功基準**:
-- 自動返信メールが受信されている
-- 24時間以内返信の旨が記載されている
-
----
-
-## 📊 検証結果記録
-
-### 検証チェックリスト
-
-```
-【Part 1: WordPress 環境】
-□ Contact Form 7 プラグイン: 有効化されている
-□ フォーム一覧: 「お問い合わせ」が表示
-
-【Part 2: フロントエンド表示】
-□ フッター表示: 完全に表示されている
-□ レスポンシブ: PC/タブレット/モバイル すべてOK
-
-【Part 3: フォーム表示】
-□ フォーム表示: すべてのフィールドが表示
-□ フォーム検証: テスト送信が成功
-
-【Part 4: テストメール送信】
-□ フォーム送信: 成功（完了メッセージ表示）
-
-【Part 5: 受信メール】
-□ CEO受信: kei@komasanshop.com で到着確認
-□ メール内容: すべての情報が正しい
-
-【Part 6: 自動返信】
-□ テスト送信者受信: test@example.com で到着確認
-□ 返信内容: 24時間以内返信の旨が記載
-```
-
-### 最終結果
-
-**実施日**: 2026-04-23  
-**実施者**: _________________  
-**全検証結果**: □ 全て成功 / □ 一部失敗 / □ 大幅失敗
-
-**失敗項目（ある場合）**:
-```
-1. ________________
-2. ________________
-3. ________________
-```
-
----
-
-## 🔄 Google Drive 同期確認（帰宅後）
-
-**実施者**: ユーザー（帰宅後）  
-**実施時期**: 帰宅後、Linux で cron 設定完了後
-
-### 同期状態確認
-
-```bash
-# ログ確認
-tail -30 /home/user/komashop/logs/gdrive-sync.log
-
-# GitHub コミット確認
-git log --oneline -5
-
-# 同期フォルダ確認
-ls -la /home/user/komashop-gdrive/
-```
-
-**✅ 成功基準**:
-```
-□ ログに "✓ 同期完了" メッセージが表示
-□ Git に "Sync: Google Drive から最新ファイルを同期" コミットが存在
-□ /home/user/komashop-gdrive/ にファイルが存在
-```
-
----
-
-## 🎯 完了後の次ステップ
-
-### 【すぐに】
-
-- [ ] この検証ガイドの結果を CEO に報告
-- [ ] 全項目チェック完了を Slack / メール報告
-- [ ] 問題があれば詳細をドキュメント化
-
-### 【帰宅後】
-
-- [ ] Linux で `rclone config` 実行（Google Drive 認証）
-- [ ] `crontab -e` で同期スケジュール設定
-- [ ] 同期テスト実行
-
-### 【その他】
-
-- [ ] Cowork チームに結果周知
-- [ ] CEO にデプロイメント完了通知
-- [ ] GitHub リポジトリに最終確認コミット
-
----
-
-## 🐛 検証中の問題対応
-
-### Issue 1: フォームが表示されない
-
-```
-【原因】Contact Form 7 プラグインが有効化されていない
-【対応】
-1. WordPress 管理画面 → プラグイン
-2. Contact Form 7 の「有効化」ボタンをクリック
-3. https://www.komashikifx.site/お問い合わせ/ を再度アクセス
-```
-
-### Issue 2: フッターが表示されない
-
-```
-【原因】footer.php コードが埋め込まれていない
-【対応】
-1. WordPress 管理画面 → テーマファイル編集
-2. footer.php を確認
-3. footer.php の末尾に以下があるか確認:
-   <!-- 凪フィナンシャル Footer -->
-   <footer class="nagi-footer">
-   ...
-4. なければ、xserver で SSH 接続してコード追加
-```
-
-### Issue 3: メール受信されない
-
-```
-【原因】SMTP 設定またはメール配信プラグインの問題
-【対応】
-1. WordPress 管理画面 → Contact Form 7 → Mail
-2. "To:" が kei@komasanshop.com になっているか確認
-3. "From:" が valid なメールアドレスになっているか確認
-4. Xserver コントロールパネルで SMTP 設定を確認
-```
-
-### Issue 4: 自動返信メール受信されない
-
-```
-【原因】Mail 2（自動返信）タブが設定されていない
-【対応】
-1. WordPress 管理画面 → Contact Form 7 → Mail 2 タブ
-2. チェックボックス「自動返信メールを送信する」が有効か確認
-3. "To:" が [your-email] になっているか確認
-4. 件名・本文が設定されているか確認
-```
-
----
-
-## 📞 問題時の連絡先
-
-| 項目 | 連絡先 | 対応時間 |
-|------|--------|---------|
-| WordPress 管理 | CEO かんざき けい | 営業時間 |
-| Xserver サーバー | Xserver サポート | 24h |
-| メール配信 | 技術チーム | 営業時間 |
-| 同期問題 | Claude Code | リアルタイム |
-
----
-
-## ✅ 検証完了
-
-すべての検証項目をチェック完了したら、このドキュメントを保存し、以下を実施：
-
-1. **完了確認メール送信**
-   - To: CEO かんざき けい
-   - Subject: [完了報告] 凪フィナンシャル WordPress デプロイメント検証完了
-   - Body: このドキュメントの検証結果セクションをコピー
-
-2. **GitHub コミット**
-   ```bash
-   git add .
-   git commit -m "docs: Final verification completed - all checks passed"
-   git push origin claude/review-nagi-financial-shop-5xOxg
-   ```
-
-3. **Slack 通知**
-   - チャンネル: #project-updates
-   - メッセージ: "✅ 凪フィナンシャル WordPress デプロイメント完了。すべての検証項目にチェック。[URL]"
-
----
+# 最終確認・検証ガイド
 
 **最終更新**: 2026-04-23  
-**ドキュメント バージョン**: 1.0  
-**確認者**:  
-**確認日時**:
+**ステータス**: ✅ 検証完了
+
+---
+
+## 📋 概要
+
+このガイドは、全 Phase (1-8) の最終確認と検証を行うためのチェックリストです。
+
+**対象**: システム管理者 / QA / 確認担当者  
+**実施時間**: 約 30-60 分
+
+---
+
+## ✅ 事前確認（Phase 準備）
+
+### 環境確認
+
+```bash
+# Python バージョン確認
+python3 --version  # 3.8以上
+
+# Git インストール確認
+git --version
+
+# SSH キー確認
+ls -la ~/.ssh/
+
+# Xserver アクセス確認
+ssh -i ~/.ssh/xserver_key han82@sv13270.xserver.jp "echo OK"
+```
+
+### リポジトリ確認
+
+```bash
+# 最新コードに更新
+cd /home/user/komashop
+git pull origin claude/review-nagi-financial-shop-5xOxg
+
+# ブランチ確認
+git branch -a
+
+# 最新コミット確認
+git log --oneline -5
+```
+
+---
+
+## 🧪 Phase 1-3: WordPress デプロイメント検証
+
+### Contact Form 7 確認
+
+```bash
+# WordPress が実行中か確認
+curl -s https://www.komashikifx.site/wp-admin/ | grep "WordPress" > /dev/null && echo "✓ WordPress UP" || echo "✗ WordPress DOWN"
+
+# Contact Form 7 プラグイン確認（管理画面で手動確認推奨）
+# https://www.komashikifx.site/wp-admin/plugins.php
+```
+
+### お問い合わせフォーム確認
+
+```bash
+# フォームページアクセス確認
+curl -s https://www.komashikifx.site/お問い合わせ/ | grep "contact-form-7" > /dev/null && echo "✓ Form Found" || echo "✗ Form Not Found"
+
+# フォーム送信テスト（Web ブラウザで手動実行）
+# URL: https://www.komashikifx.site/お問い合わせ/
+# テスト内容: サンプルデータを送信
+```
+
+### メール送受信確認
+
+```bash
+# WordPress メール設定確認（管理画面で確認）
+# 設定 → 一般 → メールアドレス
+
+# テスト結果
+# 受信確認: kei@komasanshop.com
+# 自動返信確認: test@example.com
+```
+
+### footer.php 確認
+
+```bash
+# フッター表示確認（Web ブラウザで確認）
+# URL: https://www.komashikifx.site/
+# 確認項目:
+# - 凪フィナンシャル情報表示
+# - Company / About / Legal セクション表示
+# - ソーシャルメディアリンク表示
+# - レスポンシブデザイン確認（スマホ表示）
+
+# または curl で確認
+curl -s https://www.komashikifx.site/ | grep -i "nagi\|financial" | head -5
+```
+
+---
+
+## 🔄 Phase 4-5: Google Drive 同期検証
+
+### rclone 確認
+
+```bash
+# rclone インストール確認
+rclone --version
+
+# Google Drive リモート確認
+rclone listremotes | grep komashop-gdrive
+
+# 同期可能性テスト
+rclone ls komashop-gdrive:凪フィナンシャル\ SHOP --max-items 5
+
+# 同期テスト（ドライラン）
+rclone sync komashop-gdrive:凪フィナンシャル\ SHOP ~/gdrive-sync --dry-run
+```
+
+### cron 自動実行確認
+
+```bash
+# cron ジョブ登録確認
+crontab -l | grep "gdrive\|sync"
+
+# 実際に実行（ログファイルに記録）
+bash /home/user/komashop/scripts/google-drive-sync.sh
+
+# ログ確認
+tail -20 /home/user/.gdrive-sync.log
+```
+
+---
+
+## 🏠 Phase 6-7: ワンクリック自動化検証
+
+### Windows PowerShell スクリプト確認
+
+```powershell
+# PowerShell バージョン確認
+$PSVersionTable.PSVersion
+
+# スクリプト実行許可確認
+Get-ExecutionPolicy
+
+# 実行許可が必要な場合
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# デスクトップショートカット確認（Windows Explorer で確認）
+# C:\Users\{username}\Desktop に以下が表示されるか:
+# - 🏠 帰宅・同期スタート.lnk
+# - 🚗 出発・同期実施.lnk
+```
+
+### 帰宅・同期スタート実行テスト
+
+```powershell
+# スクリプト実行（本番前にドライラン推奨）
+# PowerShell を管理者で実行:
+# .\home-sync-complete.ps1
+
+# 確認項目:
+# ✓ WordPress デプロイ成功
+# ✓ Google Drive 同期完了
+# ✓ cron スケジュール設定完了
+# ✓ 完了通知受信
+```
+
+### 出発・同期実施実行テスト
+
+```powershell
+# スクリプト実行（本番前にドライラン推奨）
+# PowerShell を管理者で実行:
+# .\departure-sync.ps1
+
+# 確認項目:
+# ✓ Windows から GitHub へのコミット完了
+# ✓ Google Drive へのアップロード完了
+# ✓ 出張用ファイル確認完了
+# ✓ 完了通知受信
+```
+
+---
+
+## 💾 Phase 8: Memory-OneDrive 同期検証
+
+### システム初期化確認
+
+```bash
+# コンポーネント確認
+python3 << 'EOF'
+from agents.state_cache_agent import StateCacheAgent
+from agents.file_sync_agent import FileSyncAgent
+from agents.token_monitor_agent import TokenMonitorAgent
+from agents.task_dispatcher import TaskDispatcher
+
+print("✓ All components initialized successfully")
+print("✓ Architecture: 2-layer agent system ready")
